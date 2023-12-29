@@ -34,7 +34,7 @@ jobs:
     - name: Trigger test1 workflow
       run: |
         curl -v -X POST \
-          -H "Authorization: Bearer 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" \
+          -H "Authorization: Bearer ${{ secrets.PAT }}" \
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/prd_prog/repo/dispatches \
           -d '{"event_type": "trigger-test1-workflow"}'
