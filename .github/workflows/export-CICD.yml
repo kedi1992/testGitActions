@@ -22,7 +22,7 @@ jobs:
         zip -r test.zip test.txt commit_hash.txt
         # Upload the test.zip file as an artifact
         echo "Uploading artifact..."
-        mv test.zip ${{ github.workspace }}/test.zip
+        mv test.zip ${{ github.workspace }}/test1.zip
         echo "::set-output name=artifact_path::${{ github.workspace }}/test.zip"
 
     - name: Upload artifact
