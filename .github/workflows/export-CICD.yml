@@ -1,0 +1,40 @@
+name: Build and Package
+
+on:
+  push:
+    branches:
+      - main  # Adjust this to match your main branch name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and package
+      run: |
+        # Your build steps here
+        # Create the test.zip file
+        echo "Hello, World!" > test.txt
+        echo ${{ github.sha }} > commit_hash.txt
+        zip -r test.zip test.txt commit_hash.txt
+        # Upload the test.zip file as an artifact
+        echo "Uploading artifact..."
+        mv test.zip ${{ github.workspace }}/test.zip
+        echo "::set-output name=artifact_path::${{ github.workspace }}/test.zip"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-artifact
+        path: ${{ github.workspace }}
+
+    - name: Trigger test1 workflow
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer ${{ secrets.PAT }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/prd_prog/repo/dispatches \
+          -d '{"event_type": "trigger-test1-workflow"}'
