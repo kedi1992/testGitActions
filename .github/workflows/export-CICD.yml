@@ -33,8 +33,4 @@ jobs:
 
     - name: Trigger test1 workflow
       run: |
-        curl -v -X POST \
-          -H "Authorization: Bearer ${{ secrets.PAT }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/kedi1992/prd_prog/dispatches \
-          -d '{"event_type": "trigger-prd-prog-CICD", "client_payload": { "param1": "value1", "param2": "value2" }}'
+        curl -v -X POST -H "Authorization: Bearer ${{ secrets.PAT }}" -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/kedi1992/prd_prog/dispatches -d '{"event_type": "trigger-prd-prog-CICD", "client_payload": { "param1": "value1", "param2": "value2" }}'
